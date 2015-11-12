@@ -186,20 +186,36 @@ video {
 }
 
 /* Sample hotspots */
+#one, #two, #faster, #slower {
+	border: 2px solid white;
+}
+
 #one {
 	width: 10%;
 	height: 20%;
-	top: 50%;
+	top: 0%;
 	left: 0;
-	margin-top: -10%;
 }
 
-#another {
-	width: 20%;
-	height: 10%;
+#two {
+	width: 10%;
+	height: 20%;
+	top: 30%;
+	left: 0;
+}
+
+#faster {
+	width: 10%;
+	height: 20%;
 	top: 0;
-	left: 50%;
-	margin-left: -10%;
+	right: 0%;
+}
+
+#slower {
+	width: 10%;
+	height: 20%;
+	top: 30%;
+	right: 0%;
 }
 
 .link {

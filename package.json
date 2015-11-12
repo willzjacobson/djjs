@@ -1,0 +1,23 @@
+{
+  "name": "djjs",
+  "version": "1.0.0",
+  "description": "JS Motion Detection ===================",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon --watch server -e js,html server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ReallyGood/js-motion-detection.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ReallyGood/js-motion-detection/issues"
+  },
+  "homepage": "https://github.com/ReallyGood/js-motion-detection#readme",
+  "dependencies": {
+    "express": "^4.13.3"
+  }
+}

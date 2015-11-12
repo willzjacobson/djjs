@@ -68,13 +68,14 @@
 		alert('Webcam error!', e);
 	};
 
+	// AUDIO WAS TRUE, I SET IT TO FALSE SO IT WOULDN'T PLAY BACK MY SURROUNDINGS
 	if (navigator.getUserMedia) {
-		navigator.getUserMedia({audio: true, video: true}, function (stream) {
+		navigator.getUserMedia({audio: false, video: true}, function (stream) {
 			video.src = stream;
 			initialize();
 		}, webcamError);
 	} else if (navigator.webkitGetUserMedia) {
-		navigator.webkitGetUserMedia({audio: true, video: true}, function (stream) {
+		navigator.webkitGetUserMedia({audio: false, video: true}, function (stream) {
 			video.src = window.webkitURL.createObjectURL(stream);
 			initialize();
 		}, webcamError);
