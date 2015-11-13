@@ -12,19 +12,28 @@ for (var i = 0; i < audios.length; i++) {
 
 var oneDisabled = false;
 var twoDisabled = false;
-var pauseDisabled = false;
 var threeDisabled = false;
+var pauseDisabled = false;
 var allPaused = false;
 var wasPlaying = [];
+var toStart = [];
+
+// if wasPlaying.length === 0, start setinterval when you play something. 
+// setinterval 
 
 // Start playing on a loop (playbackRate is changeable). Used in motion event handlers.
-function playLoop(element) {
+function playLoop(element, id) {
 	var audio = element.getElementsByTagName('audio')[0];
 	if (audio.paused) {
-		audio.currentTime = 0;
 		audio.play();
+		wasPlaying.push(audio);
+		$('#'+ id).css('borderColor', '#6131bc');
 	} else {
 		audio.pause();
+		var index = wasPlaying.indexOf(audio);
+		wasPlaying.splice(index,1);
+		$('#'+ id).css('borderColor', '#fff');
+		audio.currentTime = 0;
 	}
 }
 
@@ -37,21 +46,19 @@ function playOnce(element) {
 
 // Pauses all audios without resetting time / Unpauses those that were playing
 function pauseAll() {
-	console.log('paused?', allPaused);
 	var loopers = document.getElementsByClassName('loop');
 	if (!allPaused) {
 		for (var i = 0; i < audios.length; i++) {
-		
 			if (!audios[i].paused) {
-				wasPlaying.push(audios[i]);
 				audios[i].pause();
 			} 
 		}
+		$('#pause').css('borderColor', '#b71f1f');
 	} else {
 		for (var j = 0; j < audios.length; j++) {
 			if (wasPlaying.indexOf(audios[j]) >= 0) audios[j].play();
 		}
-		wasPlaying = [];	
+		$('#pause').css('borderColor', '#fff');
 	}
 	allPaused = !allPaused;
 }
@@ -73,16 +80,17 @@ function registerListeners(){
 	$('#one').on('motion', function(){
 		if (oneDisabled) return;
 		oneDisabled = true;
-		playLoop(this);
+		playLoop(this, 'one');
 		setTimeout(function() {
 			oneDisabled = false;
+			// 
 		}, 500);
 	});
 
 	$('#two').on('motion', function(){
 		if (twoDisabled) return;
 		twoDisabled = true;
-		playLoop(this);
+		playLoop(this, 'two');
 		setTimeout(function() {
 			twoDisabled = false;
 		}, 500);
@@ -98,7 +106,6 @@ function registerListeners(){
 	});
 
 	$('#pause').on('motion', function() {
-		console.log('llllllaaaaa', allPaused);
 		if (pauseDisabled) return;
 		pauseDisabled = true;
 		pauseAll();
