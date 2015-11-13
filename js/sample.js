@@ -3,15 +3,19 @@
 	// either me with drumbs, or me posting mp3s, or preexisting mp3s
 	// a bird, 2 looping beats, a looping drone, 2 congas, a symbol
 
-setTimeout(registerAll, 1500);
+setTimeout(registerListeners, 3000);
 
 var audios = document.getElementsByTagName('audio');
 for (var i = 0; i < audios.length; i++) {
 	audios[i].load();
 } 
 
-var oneDisabled;
-var twoDisabled;
+var oneDisabled = false;
+var twoDisabled = false;
+var pauseDisabled = false;
+var threeDisabled = false;
+var allPaused = false;
+var wasPlaying = [];
 
 // Start playing on a loop (playbackRate is changeable). Used in motion event handlers.
 function playLoop(element) {
@@ -31,7 +35,29 @@ function playOnce(element) {
 	audio.play();
 }
 
-function registerAll(){
+// Pauses all audios without resetting time / Unpauses those that were playing
+function pauseAll() {
+	console.log('paused?', allPaused);
+	var loopers = document.getElementsByClassName('loop');
+	if (!allPaused) {
+		for (var i = 0; i < audios.length; i++) {
+		
+			if (!audios[i].paused) {
+				wasPlaying.push(audios[i]);
+				audios[i].pause();
+			} 
+		}
+	} else {
+		for (var j = 0; j < audios.length; j++) {
+			if (wasPlaying.indexOf(audios[j]) >= 0) audios[j].play();
+		}
+		wasPlaying = [];	
+	}
+	allPaused = !allPaused;
+}
+
+
+function registerListeners(){
 
 	// consider using a debounce utility if you get too many consecutive events
 	$(window).on('motion', function(ev, data){
@@ -56,9 +82,28 @@ function registerAll(){
 	$('#two').on('motion', function(){
 		if (twoDisabled) return;
 		twoDisabled = true;
-		playOnce(this);
+		playLoop(this);
 		setTimeout(function() {
 			twoDisabled = false;
+		}, 500);
+	});
+
+	$('#three').on('motion', function(){
+		if (threeDisabled) return;
+		threeDisabled = true;
+		playOnce(this);
+		setTimeout(function() {
+			threeDisabled = false;
+		}, 500);
+	});
+
+	$('#pause').on('motion', function() {
+		console.log('llllllaaaaa', allPaused);
+		if (pauseDisabled) return;
+		pauseDisabled = true;
+		pauseAll();
+		setTimeout(function() {
+			pauseDisabled = false;
 		}, 500);
 	});
 

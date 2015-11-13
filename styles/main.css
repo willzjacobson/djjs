@@ -186,7 +186,7 @@ video {
 }
 
 /* Sample hotspots */
-#one, #two, #faster, #slower {
+#one, #two, #three, #faster, #slower, #pause {
 	border: 2px solid white;
 }
 
@@ -204,6 +204,13 @@ video {
 	left: 0;
 }
 
+#three {
+	width: 10%;
+	height: 20%;
+	top: 60%;
+	left: 0;
+}
+
 #faster {
 	width: 10%;
 	height: 20%;
@@ -218,8 +225,10 @@ video {
 	right: 0%;
 }
 
-.link {
-	font-size: 22px;
-	color: #fff;
-	padding: .5%;
+#pause {
+	width: 10%;
+	height: 20%;
+	top: 60%;
+	right: 0%;
 }
+
