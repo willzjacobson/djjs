@@ -11,6 +11,7 @@ var oneDisabled = false;
 var twoDisabled = false;
 var threeDisabled = false;
 var pauseDisabled = false;
+var audioLength;
 var intervalId;
 var rate = 1;
 var allPaused = false;
@@ -28,6 +29,8 @@ function startSetInterval() {
 	return setInterval(function() {
 		// toStart is full of audio elements waiting to be paused or played since the last downbeat
 		for (var i = 0; i < toStart.length; i++) {
+			audioLength = toStart[i].duration;
+			console.log('audioLength', audioLength);
 			// If an audio in the toStart queue is not currently playing: start playing, change its parent div's border color, and push it into the 'currently playing' array;
 			if (toStart[i].paused) {
 				toStart[i].play();
@@ -48,7 +51,10 @@ function startSetInterval() {
 		if (!isPlaying.length) clearInterval(intervalId);
 		console.log('tick');
 		// default rate is 120 bpm, so a 1/4 beat is half a second * (1 / playbackRate)
-	}, 500 * (1/rate));
+		var blah = audioLength * 1000 * (1/rate)
+		console.log(blah)
+		console.log('rate', rate)
+	}, audioLength * 1000 * (1/rate));
 }
 
 // Start playing on a loop (playbackRate is changeable). If nothing is already playing, start metronome. Used in motion event handlers.
@@ -133,7 +139,7 @@ function registerListeners(){
 	$('#three').on('motion', function(){
 		if (threeDisabled) return;
 		threeDisabled = true;
-		playOnce(this);
+		playLoop(this);
 		setTimeout(function() {
 			threeDisabled = false;
 		}, 500);
