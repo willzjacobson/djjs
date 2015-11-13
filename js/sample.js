@@ -14,24 +14,41 @@ var oneDisabled = false;
 var twoDisabled = false;
 var threeDisabled = false;
 var pauseDisabled = false;
+var intervalId;
+var rate = 1;
 var allPaused = false;
-var wasPlaying = [];
+var isPlaying = [];
 var toStart = [];
 
-// if wasPlaying.length === 0, start setinterval when you play something. 
-// setinterval 
+// toStart has actual audio elements in it, not id's
+// setinterval : for each thing in toStart, set currenttime to remove a downbeat, and start them. then reset toStart.  time = 1 downbeat (relative to rate)
 
-// Start playing on a loop (playbackRate is changeable). Used in motion event handlers.
+function startSetInterval() {
+	return setInterval(function() {
+		// For every audio in toStart
+			// if it's paused, play it (currentTime should always be 0 if it's paused)
+			// if it's playing, pause it and set currentTime to 0
+		// if 
+		console.log('tick');
+	}, 1000 * rate);
+}
+
+// Start playing on a loop (playbackRate is changeable). If nothing is already playing, start metronome. Used in motion event handlers.
 function playLoop(element, id) {
+	if (allPaused) return;
+	// if nothing's playing, start metronome again
+	if (!isPlaying.length) intervalId = startSetInterval(); 
 	var audio = element.getElementsByTagName('audio')[0];
 	if (audio.paused) {
 		audio.play();
-		wasPlaying.push(audio);
+		isPlaying.push(audio);
 		$('#'+ id).css('borderColor', '#6131bc');
 	} else {
 		audio.pause();
-		var index = wasPlaying.indexOf(audio);
-		wasPlaying.splice(index,1);
+		var index = isPlaying.indexOf(audio);
+		isPlaying.splice(index,1);
+		// If nothing is playing now, stop the metronome
+		if (!isPlaying.length) clearInterval(intervalId);
 		$('#'+ id).css('borderColor', '#fff');
 		audio.currentTime = 0;
 	}
@@ -48,16 +65,21 @@ function playOnce(element) {
 function pauseAll() {
 	var loopers = document.getElementsByClassName('loop');
 	if (!allPaused) {
+		// Perform this block when setinterval fires!
 		for (var i = 0; i < audios.length; i++) {
 			if (!audios[i].paused) {
 				audios[i].pause();
 			} 
 		}
+		// Stop the metronome so it's in sync with music when we start again.
+		clearInterval(intervalId);
 		$('#pause').css('borderColor', '#b71f1f');
 	} else {
 		for (var j = 0; j < audios.length; j++) {
-			if (wasPlaying.indexOf(audios[j]) >= 0) audios[j].play();
+			if (isPlaying.indexOf(audios[j]) >= 0) audios[j].play();
 		}
+		// If anything is being unpaused, start setInterval again
+		if (isPlaying.length) intervalId = startSetInterval(); 
 		$('#pause').css('borderColor', '#fff');
 	}
 	allPaused = !allPaused;
@@ -114,16 +136,18 @@ function registerListeners(){
 		}, 500);
 	});
 
-	// increase rate by 0.01 per motion event
+	// increase rate by 0.01 per motion event. Update global variable rate.
 	$('#faster').on('motion', function(){
 		var audios = document.getElementsByClassName('loop');
+		var currentrate;
 		for (var i = 0; i < audios.length; i++) {
 			audios[i].playbackRate += 0.01;
+			rate = audios[i].playbackRate;
 			console.log('rate', audios[i].playbackRate);
 		}
 	});
 
-	// reduce rate by 0.01 per motion event
+	// reduce rate by 0.01 per motion event. Update global variable rate.
 	$('#slower').on('motion', function(){
 		var audios = document.getElementsByClassName('loop');
 		for (var i = 0; i < audios.length; i++) {
