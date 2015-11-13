@@ -38,11 +38,12 @@ function startSetInterval() {
 			// and reset its currentTime attribute so it picks up on-beat next time it's played (time to set to depends on the current playbackRate for all 'loop' audio elements)
 				toStart[i].pause();
 				$(toStart[i]).closest('div').css('borderColor', '#fff');
-				var index = isPlaying.indexOf(audio);
+				var index = isPlaying.indexOf(toStart[i]);
 				isPlaying.splice(index,1);
-				toStart[i].currentTime = (1/rate) * 0.5;
+				toStart[i].currentTime = 0;
 			}
 		}
+		toStart = [];
 		// if nothing is playing now, stop and reset the metronome
 		if (!isPlaying.length) clearInterval(intervalId);
 		console.log('tick');
@@ -51,14 +52,17 @@ function startSetInterval() {
 }
 
 // Start playing on a loop (playbackRate is changeable). If nothing is already playing, start metronome. Used in motion event handlers.
-function playLoop(element, id) {
+function playLoop(element) {
 	if (allPaused) return;
 	var audio = element.getElementsByTagName('audio')[0];
 	// if nothing's playing, start metronome again
 	if (!isPlaying.length) {
 		intervalId = startSetInterval();
 		audio.play();
+		$(audio).closest('div').css('borderColor', '#6131bc');
+		isPlaying.push(audio);
 	} else {
+		// if there's other stuff going on in the state, push the audio element into 'toStart' queue and it'll get taken care of in setInterval (above)
 		toStart.push(audio);
 	}
 }
@@ -110,7 +114,7 @@ function registerListeners(){
 	$('#one').on('motion', function(){
 		if (oneDisabled) return;
 		oneDisabled = true;
-		playLoop(this, 'one');
+		playLoop(this);
 		setTimeout(function() {
 			oneDisabled = false;
 			// 
@@ -120,7 +124,7 @@ function registerListeners(){
 	$('#two').on('motion', function(){
 		if (twoDisabled) return;
 		twoDisabled = true;
-		playLoop(this, 'two');
+		playLoop(this);
 		setTimeout(function() {
 			twoDisabled = false;
 		}, 500);
