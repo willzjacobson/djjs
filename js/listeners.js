@@ -73,19 +73,20 @@ function playOnce(element) {
 
 // Mutes / unmutes all audios that were playing
 function pauseAll() {
-	// if (!allPaused) {
-	// 	for (var i = 0; i < isPlaying.length; i++) {
-	// 		isPlaying[i].muted = true; 
-	// 	}
-	// 	$('#pause').css('borderColor', '#b71f1f');
-	// } else {
-	// 	for (var j = 0; j < isPlaying.length; j++) {
-	// 		console.log('isPlaying', isPlaying)
-	// 		isPlaying[i].muted = false;
-	// 	}
-	// 	$('#pause').css('borderColor', '#fff');
-	// }
-	// allPaused = !allPaused;
+	if (!allPaused) {
+		for (var i = 0; i < isPlaying.length; i++) {
+			isPlaying[i].muted = true; 
+			isPlaying[i].pause();
+		}
+		$('#pause').css('borderColor', '#b71f1f');
+	} else {
+		for (var j = 0; j < isPlaying.length; j++) {
+			isPlaying[j].muted = false;
+			isPlaying[j].play();
+		}
+		$('#pause').css('borderColor', '#fff');
+	}
+	allPaused = !allPaused;
 }
 
 
