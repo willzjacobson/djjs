@@ -186,30 +186,69 @@ video {
 }
 
 /* Sample hotspots */
-#one, #two, #three, #faster, #slower, #pause {
+#faster, #slower, #pause {
+	border: 2px solid white;
+}
+
+#one, #two, #three, #four, #five, #six{
+	width: 10%;
+	height: 10%;
+	left: 0;
 	border: 2px solid white;
 }
 
 #one {
-	width: 10%;
-	height: 20%;
-	top: 0%;
-	left: 0;
+	bottom: 0%;
 }
 
 #two {
-	width: 10%;
-	height: 20%;
-	top: 30%;
-	left: 0;
+	bottom: 15%;
 }
 
 #three {
-	width: 10%;
-	height: 20%;
-	top: 60%;
-	left: 0;
+	bottom: 30%;
 }
+
+#four {
+	bottom: 45%;
+}
+
+#five {
+	bottom: 60%;
+}
+
+#six {
+	bottom: 75%;
+}
+
+#seven, #eight, #nine, #ten, #eleven {
+	width: 10%;
+	height: 10%;
+	top: 0;
+	border: 2px solid white;
+}
+
+#seven {
+	left: 15%;
+}
+
+#eight {
+	left: 30%;
+}
+
+#nine {
+	left: 45%;
+}
+
+#ten {
+	left: 60%;
+}
+
+#eleven {
+	left: 75%;
+}
+
+
 
 #faster {
 	width: 10%;

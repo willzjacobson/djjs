@@ -1,12 +1,11 @@
-// get good sounds for beats (must all be same tempo)
-// get good punctuated beats
-	// either me with drumbs, or me posting mp3s, or preexisting mp3s
-	// a bird, 2 looping beats, a looping drone, 2 congas, a symbol
+// THIS FILE IS NOT USED< BUT I CAN'T BRING MYSELF TO DELETE IT
 
 setTimeout(registerListeners, 3000);
 
 var audios = document.getElementsByTagName('audio');
 var loopers = document.getElementsByClassName('loop');
+console.log(loopers)
+
 var oneDisabled = false;
 var twoDisabled = false;
 var threeDisabled = false;
