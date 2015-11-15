@@ -248,26 +248,38 @@ video {
 	left: 75%;
 }
 
+#twelve, #thirteen, #fourteen, #fifteen, #faster, #slower, #pause {
+	width: 10%;
+	height: 9%;
+	right: 0;
+	border: 2px solid white;
+}
 
+#twelve {
+	top: 15%;
+}
+
+#thirteen {
+	top: 28%;
+}
+
+#fourteen {
+	top: 41%;
+}
+
+#fifteen {
+	top: 54%;
+}
 
 #faster {
-	width: 10%;
-	height: 20%;
-	top: 0;
-	right: 0%;
+	top: 67%;
 }
 
 #slower {
-	width: 10%;
-	height: 20%;
-	top: 30%;
-	right: 0%;
+	top: 78%;
 }
 
 #pause {
-	width: 10%;
-	height: 20%;
-	top: 60%;
-	right: 0%;
+	top: 90%;
 }
 
