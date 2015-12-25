@@ -6,5 +6,5 @@ INSTALLATION =-=-=-=-=-=-=-=-=-=-=-
 MODIFICATION =-=-=-=-=-=-=-=-=-=-=-
 Swap out the src attributes in the audio tags for whatever you like to hear.
 
-Thanks to ReallyGood for their rmagnificently handy motion detection program: https://github.com/ReallyGood/js-motion-detection.
+Thanks to ReallyGood for their magnificently handy motion detection program: https://github.com/ReallyGood/js-motion-detection.
 
